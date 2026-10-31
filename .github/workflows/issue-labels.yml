@@ -1,0 +1,33 @@
+# Turn the Severity / Area answers of an issue form into labels
+# (sev:1-wrong-result, area:solver, ...), matching scripts/issues.py.
+
+name: label issue from form
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const body = context.payload.issue.body || "";
+            const section = (h) => {
+              const m = body.match(new RegExp(`### ${h}\\s*\n+([^#]*)`));
+              return m ? m[1].trim() : "";
+            };
+            const labels = [];
+            const sev = section("Severity").match(/^S([123])/);
+            if (sev) labels.push({1: "sev:1-wrong-result", 2: "sev:2-crash", 3: "sev:3-usability"}[sev[1]]);
+            for (const a of section("Area").split(",").map(s => s.trim()).filter(Boolean)) {
+              if (a !== "_No response_") labels.push(`area:${a}`);
+            }
+            if (labels.length) {
+              await github.rest.issues.addLabels({...context.repo, issue_number: context.issue.number, labels});
+            }

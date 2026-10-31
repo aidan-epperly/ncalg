@@ -1,0 +1,2 @@
+% unit functional u_j = coefficient of y_1 in kernel column j (1-based index, value)
+1 1.00000000000000000e0

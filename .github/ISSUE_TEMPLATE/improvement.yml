@@ -1,0 +1,30 @@
+name: Improvement
+description: New capability, performance work, or a usability change.
+labels: ["improvement"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options: [groebner, reduction, relaxation, elimination, symmetry, solver, export, gns, scripts, examples, docs, build]
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What task this makes possible, faster or less error-prone.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: API sketch, algorithm or doc change.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance
+      description: Test, benchmark or example that shows it is done.
+      value: "- [ ] "

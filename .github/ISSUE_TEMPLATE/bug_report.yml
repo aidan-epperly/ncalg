@@ -1,0 +1,67 @@
+name: Bug report
+description: ncalg computes something wrong, crashes, or is unusably slow on valid input.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Smallest reproduction first. A wrong value needs the value a trusted method gives
+        (exact diagonalization, SCS/CSDP on the moment form, a known result).
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "S1: wrong result without an error (invalid bound, wrong normal form, wrong certificate)"
+        - "S2: crash, panic or error on valid input"
+        - "S3: performance or usability"
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options: [groebner, reduction, relaxation, elimination, symmetry, solver, export, gns, scripts, examples, docs, build]
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduce
+      description: Command or self-contained code. Attach any input files it needs.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed
+      description: Output, panic message, wrong value.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: ncalg commit
+      description: "`git rev-parse --short HEAD`"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Suspected cause (src/file.rs:line), workaround.

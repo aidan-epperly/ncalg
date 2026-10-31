@@ -1,0 +1,6 @@
+target/
+Cargo.lock
+/results/
+__pycache__/
+# per-machine performance baselines written by scripts/canary.py
+/canary/

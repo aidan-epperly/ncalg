@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Issue index and filing workflow
+    url: https://github.com/aidan-epperly/ncalg/blob/main/CONTRIBUTING.md
+    about: How to report bugs, propose improvements and contribute fixes.

@@ -1,0 +1,33 @@
+[package]
+name = "ncalg"
+version = "0.1.0"
+edition = "2021"
+description = "Noncommutative polynomial algebra over free associative algebras: arithmetic, noncommutative Groebner bases (Mora's algorithm with partial/truncated bases), and lazy reduce-while-expanding evaluation."
+readme = "README.md"
+rust-version = "1.82"
+keywords = ["noncommutative", "groebner", "free-algebra", "polynomial", "algebra"]
+categories = ["mathematics", "science"]
+license = "GPL-3.0-or-later"
+repository = "https://github.com/aidan-epperly/ncalg"
+
+[dependencies]
+num-traits = "0.2"
+num-integer = "0.1"
+num-bigint = "0.4"
+num-rational = "0.4"
+num-complex = "0.4"
+faer = { version = "0.24", default-features = false, features = ["std", "linalg"] }
+rayon = "1.10"
+
+[features]
+default = ["parallel"]
+# faer's multithreaded kernels (thread pool via spindle).  Off for targets
+# without OS threads, e.g. wasm32-unknown-unknown; rayon itself then runs on
+# the calling thread.
+parallel = ["faer/rayon"]
+
+[dev-dependencies]
+rand = "0.8"
+
+[profile.release]
+debug = 1
