@@ -41,6 +41,8 @@
 //!
 //! * [`coeff`] — coefficient traits ([`Coeff`], [`Field`]) and implementations.
 //! * [`word`], [`order`] — monomials and admissible monomial orderings.
+//! * [`commutative`] — Laurent polynomials and polynomials in commuting
+//!   variables ([`commutative::Laurent`], [`commutative::MPoly`]).
 //! * [`algebra`], [`poly`] — [`FreeAlgebra`] and [`Polynomial`].
 //! * [`reduce`] — the lazy [`Accumulator`] / [`Reducer`] machinery.
 //! * [`groebner`] — [`GroebnerBasis`], [`GroebnerOptions`], the incremental
@@ -79,6 +81,7 @@ pub mod algebra;
 pub mod arith;
 pub mod automaton;
 pub mod coeff;
+pub mod commutative;
 pub mod cyclo;
 pub mod expr;
 pub mod gns;

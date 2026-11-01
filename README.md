@@ -14,6 +14,7 @@ The crate is `#![forbid(unsafe_code)]`.
 - [Quick start](#quick-start)
 - [Coefficients](#coefficients)
 - [Polynomials](#polynomials)
+- [Commutative polynomials](#commutative-polynomials-ncalgcommutative)
 - [Monomial orderings](#monomial-orderings)
 - [Gröbner bases](#gröbner-bases)
   - [Partial bases and limits](#partial-bases-and-limits)
@@ -132,6 +133,33 @@ takes `(name, is_hermitian)` pairs and creates a partner `a†` for each
 non-Hermitian `a` with `a* = a†`; `with_order_and_adjoint` gives full control.
 `Polynomial::adjoint`, `is_hermitian`, the relaxation builder, `is_star_closed`
 and the parser's `'` all use the algebra's involution.
+
+## Commutative polynomials (`ncalg::commutative`)
+
+For variables that commute anyway, two direct types (no quotient algebra
+needed), over any `Coeff`:
+
+- `Laurent<C>`: `Σ c_k t^k` with `k ∈ ℤ`, stored densely, so equality is
+  structural.  `+ - *`, `pow`, `shift`, `substitute_power` (`t ↦ t^k`),
+  `negate_variable`, `div_exact`, evaluation in a field (`eval_with`), and
+  `display_as(var, den)`, which prints exponents as fractions `k/den`.
+- `MPoly<C>`: polynomials in `x_0, x_1, …`.  `+ - *` (also with `i64`),
+  `pow`, `degree`, `terms`, `eval_with` in any ring, and `display(&names)`.
+  Over a field, `MPoly::parse("n(n+1)/2 - 2m", &names)` reads numbers,
+  names, `+ - * /` (division by constants), `^`, parentheses and implicit
+  products; errors carry a position like the free-algebra parser's.  For
+  `MPoly<BigRational>`, `eval_i64`, `eval_integer` and `parity` handle
+  integer-valued polynomials in integer parameters.
+
+```rust
+use ncalg::commutative::MPoly;
+use ncalg::BigRational;
+
+let names = ["n".to_string(), "m".to_string()];
+let w = MPoly::<BigRational>::parse("2nm + n + m", &names).unwrap();
+assert_eq!(w.eval_integer(&[2, 3]), Some(17.into()));
+assert_eq!(w.parity(&[None, Some(true)]), None);       // n + 1 when m is odd
+```
 
 ## Monomial orderings
 
